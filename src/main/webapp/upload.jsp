@@ -1,5 +1,5 @@
 <%--
-    Document   : fileUpload
+    Document   : upload
     Created on : 23 Jan, 2021, 9:03:25 PM
     Author     : shreyas
 --%>
@@ -41,7 +41,7 @@
             }
         %>
 
-        <form action = "save" method = "post" enctype = "multipart/form-data">
+        <form action = "uploadfile" method = "post" enctype = "multipart/form-data">
 
             <div class="input-box">
                 <input type = "file"  style="color: wheat" name = "file" size = "50"  />
