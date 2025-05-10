@@ -1,8 +1,4 @@
-<%--
-    Document   : fileUpload
-    Created on : 23 Jan, 2021, 9:03:25 PM
-    Author     : shreyas
---%>
+
 <%@page import="Helpers.User"%>
 <%
     response.setHeader("Cache-Control", "no-cache");

@@ -1,38 +1,27 @@
 package Servlets;
 
 import Helpers.User;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Download extends HttpServlet {
+public class AddTag extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         String fileName = request.getParameter("file");
+        String tagName = request.getParameter("tag");
 
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
             try {
-                String filePath = user.getFileLocation(fileName);
-                response.setContentType("APPLICATION/OCTET-STREAM");
-                response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-
-                try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
-                    int i;
-                    while ((i = fileInputStream.read()) != -1) {
-                        out.write(i);
-                    }
-                }
+                user.addTagToFile(fileName, tagName);
             } catch (Exception e) {
-                out.println("Error downloading file: " + e.getMessage());
+                session.setAttribute("tag-status", "Error adding tag: " + e.getMessage());
             }
             response.sendRedirect(request.getContextPath() + "/Home");
         } else {

@@ -1,8 +1,4 @@
-<%--
-    Document   : fileUpload
-    Created on : 23 Jan, 2021, 9:03:25 PM
-    Author     : shreyas
---%>
+
 <%
     response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");

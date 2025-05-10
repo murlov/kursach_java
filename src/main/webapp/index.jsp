@@ -1,8 +1,4 @@
-<%--
-    Document   : index
-    Created on : 25 Jan, 2021, 10:05:21 AM
-    Author     : shreyas
---%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
