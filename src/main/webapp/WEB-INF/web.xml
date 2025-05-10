@@ -73,6 +73,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>RemoveTag</servlet-name>
+        <servlet-class>Servlets.RemoveTag</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveTag</servlet-name>
+        <url-pattern>/RemoveTag</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteAccount</servlet-name>
+        <servlet-class>Servlets.DeleteAccount</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteAccount</servlet-name>
+        <url-pattern>/DeleteAccount</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>RenameJSP</servlet-name>
         <jsp-file>/rename.jsp</jsp-file>
     </servlet>
@@ -115,6 +133,15 @@
     <servlet-mapping>
         <servlet-name>Upload</servlet-name>
         <url-pattern>/Upload</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteAccountJSP</servlet-name>
+        <jsp-file>/deleteAccount.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountJSP</servlet-name>
+        <url-pattern>/deleteAccount.jsp</url-pattern>
     </servlet-mapping>
 
     <session-config>

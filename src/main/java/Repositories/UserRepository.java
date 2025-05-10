@@ -50,4 +50,13 @@ public class UserRepository {
         }
         return null;
     }
+
+    public boolean deleteUser(int userId) throws SQLException {
+        Connection conn = DatabaseConnection.getConnection();
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
 }

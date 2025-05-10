@@ -31,6 +31,9 @@
                 <a href="<%=request.getContextPath()%>/Logout" class="pure-material-button-contained" style="float: right; text-decoration: none; margin: 10px;">
                     Logout
                 </a>
+                <a href="<%=request.getContextPath()%>/DeleteAccount" class="pure-material-button-contained" style="float: right; text-decoration: none; margin: 10px; background-color: #ff4444;">
+                    Delete Account
+                </a>
             </div>
         </li>
     </ul>
@@ -62,6 +65,17 @@
         <span style="float: right"><%=user.getSize(item)%></span>
         <div class="tags">
             <strong>Tags:</strong> <%=tags.isEmpty() ? "None" : String.join(", ", tags)%>
+            <% if (!tags.isEmpty()) { %>
+            <form action="RemoveTag" method="POST">
+                <input type="hidden" name="file" value="<%=item%>">
+                <select name="tag" style="margin: 10px;">
+                    <% for (String tag : tags) { %>
+                    <option value="<%=tag%>"><%=tag%></option>
+                    <% } %>
+                </select>
+                <input type="submit" class="but" style="text-decoration: none; margin: 10px;" value="Remove Tag">
+            </form>
+            <% } %>
         </div>
         <div class="options">
             <form action="DownloadFile" method="POST">

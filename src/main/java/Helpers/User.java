@@ -159,7 +159,25 @@ public class User {
         return fileRepository.addTagToFile(userId, fileName, tagName);
     }
 
+    public boolean removeTagFromFile(String fileName, String tagName) throws SQLException {
+        return fileRepository.removeTagFromFile(userId, fileName, tagName);
+    }
+
     public List<String> getFileTags(String fileName) throws SQLException {
         return fileRepository.getFileTags(userId, fileName);
+    }
+
+    public boolean deleteAccount() throws SQLException {
+        // Удаляем файлы из файловой системы
+        File userDir = new File(directory);
+        if (userDir.exists()) {
+            try {
+                FileUtils.deleteDirectory(userDir);
+            } catch (IOException e) {
+                // Логируем ошибку, но продолжаем удаление из базы
+            }
+        }
+        // Удаляем пользователя из базы (каскадное удаление позаботится о связанных данных)
+        return userRepository.deleteUser(userId);
     }
 }

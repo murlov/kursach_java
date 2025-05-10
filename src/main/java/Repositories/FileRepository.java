@@ -86,7 +86,6 @@ public class FileRepository {
 
     public boolean addTagToFile(int userId, String fileName, String tagName) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
-        // Найти или создать тег
         int tagId;
         String sqlTag = "INSERT IGNORE INTO tags (tag_name) VALUES (?)";
         try (PreparedStatement stmt = conn.prepareStatement(sqlTag, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -96,7 +95,6 @@ public class FileRepository {
             if (rs.next()) {
                 tagId = rs.getInt(1);
             } else {
-                // Тег уже существует, найдем его
                 String sqlFindTag = "SELECT tag_id FROM tags WHERE tag_name = ?";
                 try (PreparedStatement stmtFind = conn.prepareStatement(sqlFindTag)) {
                     stmtFind.setString(1, tagName);
@@ -107,7 +105,6 @@ public class FileRepository {
             }
         }
 
-        // Найти file_id
         int fileId;
         String sqlFile = "SELECT file_id FROM files WHERE user_id = ? AND file_name = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sqlFile)) {
@@ -120,11 +117,24 @@ public class FileRepository {
             fileId = rs.getInt("file_id");
         }
 
-        // Добавить связь
         String sqlLink = "INSERT IGNORE INTO file_tags (file_id, tag_id) VALUES (?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sqlLink)) {
             stmt.setInt(1, fileId);
             stmt.setInt(2, tagId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public boolean removeTagFromFile(int userId, String fileName, String tagName) throws SQLException {
+        Connection conn = DatabaseConnection.getConnection();
+        String sql = "DELETE ft FROM file_tags ft " +
+                "JOIN files f ON ft.file_id = f.file_id " +
+                "JOIN tags t ON ft.tag_id = t.tag_id " +
+                "WHERE f.user_id = ? AND f.file_name = ? AND t.tag_name = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, fileName);
+            stmt.setString(3, tagName);
             return stmt.executeUpdate() > 0;
         }
     }
