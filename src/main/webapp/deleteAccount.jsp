@@ -39,14 +39,14 @@
       margin: 0;
     }
     .pure-material-button-contained {
-      padding: 12px 25px; /* Увеличен размер для более пропорционального вида */
+      padding: 12px 25px;
       margin: 0 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
       transition: background-color 0.3s;
-      height: 60px; /* Фиксированная высота для кнопок */
+      height: 60px;
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;

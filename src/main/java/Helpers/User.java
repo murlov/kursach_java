@@ -147,7 +147,6 @@ public class User {
     }
 
     public boolean rename(String oldName, String newName) throws SQLException, IOException {
-        // Проверка на пустое или некорректное новое имя
         if (newName == null || newName.trim().isEmpty() || newName.contains("/") || newName.contains("\\")) {
             throw new IOException("Invalid new file name");
         }
@@ -155,19 +154,15 @@ public class User {
         File oldFile = new File(directory + "/" + oldName);
         File newFile = new File(directory + "/" + newName);
 
-        // Проверка существования старого файла
         if (!oldFile.exists()) {
             throw new IOException("File does not exist: " + oldName);
         }
 
-        // Проверка, не существует ли уже файл с новым именем
         if (newFile.exists()) {
             throw new IOException("A file with the name " + newName + " already exists");
         }
 
-        // Переименование файла на диске
         if (oldFile.renameTo(newFile)) {
-            // Обновление в базе данных
             return fileRepository.renameFile(userId, oldName, newName, newFile.getAbsolutePath());
         } else {
             throw new IOException("Failed to rename file on disk: " + oldName + " to " + newName);
@@ -186,15 +181,9 @@ public class User {
         return fileRepository.getFileTags(userId, fileName);
     }
 
-    public boolean deleteAccount() throws SQLException {
+    public boolean deleteAccount() throws SQLException, IOException {
         File userDir = new File(directory);
-        if (userDir.exists()) {
-            try {
-                FileUtils.deleteDirectory(userDir);
-            } catch (IOException e) {
-                // Логируем ошибку, но продолжаем удаление из базы
-            }
-        }
+        FileUtils.deleteDirectory(userDir);
         return userRepository.deleteUser(userId);
     }
 }
